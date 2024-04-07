@@ -1,0 +1,50 @@
+lint:commit-msg:
+  stage: test
+  needs:
+    - job: build:extension:backend
+      optional: true
+    - job: build:site:test:backend
+      optional: true
+  image: $PHP_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == 'merge_request_event'
+  tags:
+    - docker
+  script:
+    - git fetch origin ${CI_DEFAULT_BRANCH}:${CI_DEFAULT_BRANCH}
+    - |
+      #!/bin/bash
+      if [ -d "./.composer" ]; then
+        echo "Packages installed into directory .composer"
+        ./.composer/bin/captainhook install --no-interaction --force -b .composer/vendor/autoload.php commit-msg 
+      elif [ -d "./vendor" ]; then
+        echo "Packages installed into directory vendor"
+        ./vendor/bin/captainhook install --no-interaction --force commit-msg
+      else
+        echo "No packages installed"
+        composer install --no-interaction -o -a -vvv
+      
+        if [ -d "./.composer" ]; then
+          echo "Packages installed into directory .composer"
+          ./.composer/bin/captainhook install --no-interaction --force -b .composer/vendor/autoload.php commit-msg 
+        elif [ -d "./vendor" ]; then
+          echo "Packages installed into directory vendor"
+          ./vendor/bin/captainhook install --no-interaction --force commit-msg
+        else
+          echo "Packages not installed or installed to unknown location."
+          exit1
+        fi
+      fi
+    - |
+      #!/bin/bash
+      set -eu
+      echo ""
+      echo "Now linting your commit message(s)"
+
+      for commit in $(git rev-list "${CI_DEFAULT_BRANCH}..HEAD"); do
+        git log --format=%B -n 1 "${commit}" > GIT_COMMIT_MESSAGE
+        echo "Linting message of commit '${commit}' with message '$(cat GIT_COMMIT_MESSAGE)'"
+        .git/hooks/commit-msg GIT_COMMIT_MESSAGE
+      done;

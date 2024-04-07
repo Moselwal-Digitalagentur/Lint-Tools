@@ -1,0 +1,32 @@
+lint:eslint:
+  stage: lint
+  image: $CI_DEPENDENCY_PROXY_SERVER/$NODE_IMAGE
+  needs:
+    - job: build:extension:frontend
+      optional: true
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_NAME != 'release'
+    - if: $CI_COMMIT_REF_NAME == 'release'
+      when: never
+  allow_failure: false
+  tags:
+    - docker
+  script:
+    - NPM_BUILD_DIR=$(find ${CI_PROJECT_DIR} -type f -name "package.json" -exec dirname {} \;)
+    - export NPM_BUILD_DIR
+    - npm ci
+    - npm run lint:eslint.report.junit
+  after_script:
+    - sed -i "s+$(pwd)++g" ${CI_PROJECT_DIR}/${NPM_BUILD_DIR}/reports/eslintreport.junit.xml
+    - sed -i "s+ name=+ file=+g" ${CI_PROJECT_DIR}/${NPM_BUILD_DIR}/reports/eslintreport.junit.xml
+  artifacts:
+    when: always
+    paths:
+      - ${CI_PROJECT_DIR}/${NPM_BUILD_DIR}/reports/*.*
+      - ${CI_PROJECT_DIR}/public
+    expire_in: 60 minutes
+    reports:
+      junit: ${CI_PROJECT_DIR}/${NPM_BUILD_DIR}/reports/eslintreport.junit.xml

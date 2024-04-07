@@ -1,0 +1,16 @@
+lint:phplint:
+  stage: lint
+  image: $PHP_IMAGE
+  needs: []
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_NAME != 'release'
+    - if: $CI_COMMIT_REF_NAME == 'release'
+      when: never
+  allow_failure: false
+  tags:
+    - docker
+  script:
+    - find *.php Classes Configuration -name '*.php' -print0 | xargs -r -0 -n 1 -P 4 php -l
