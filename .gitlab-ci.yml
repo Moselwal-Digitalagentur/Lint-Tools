@@ -6,7 +6,12 @@ include:
   - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:composer:psr-verify@$CI_COMMIT_SHA
   - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:composer:validate@$CI_COMMIT_SHA
   - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:eslint@$CI_COMMIT_SHA
-
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:json@$CI_COMMIT_SHA
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:php@$CI_COMMIT_SHA
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:stylelint@$CI_COMMIT_SHA
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:typoscript@$CI_COMMIT_SHA
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:xliff@$CI_COMMIT_SHA
+  - component: ${CI_SERVER_HOST}/${CI_PROJECT_PATH}/lint:yaml@$CI_COMMIT_SHA
 
 create-release:
   stage: release
