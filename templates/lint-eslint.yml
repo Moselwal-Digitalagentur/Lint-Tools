@@ -1,7 +1,7 @@
 spec:
   inputs:
     stage:
-      default: 'lint'
+      default: 'test'
 ---
 lint:eslint:
   stage: $[[ inputs.stage ]]
