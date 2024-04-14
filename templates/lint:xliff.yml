@@ -1,5 +1,10 @@
+spec:
+  inputs:
+    stage:
+      default: 'lint'
+---
 lint:xliff:
-  stage: lint
+  stage: $[[ inputs.stage ]]
   image: $PHP_IMAGE
   needs: []
   rules:

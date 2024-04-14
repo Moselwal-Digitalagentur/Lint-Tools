@@ -1,5 +1,10 @@
+spec:
+  inputs:
+    stage:
+      default: 'lint'
+---
 lint:composer:normalize:
-  stage: lint
+  stage: $[[ inputs.stage ]]
   image: $PHP_IMAGE
   needs:
     - job: build:extension:backend
