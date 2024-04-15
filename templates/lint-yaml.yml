@@ -5,7 +5,7 @@ spec:
 ---
 lint:yaml:
   stage: $[[ inputs.stage ]]
-  image: registry.moselwal.io/devops/images/php/$PHP_VERSION/ci
+  image: registry.moselwal.io/devops/images/php/$PHP_VERSION/ci/php-ci
   needs: ['build:extension:backend']
   rules:
     - if: $CI_COMMIT_TAG
