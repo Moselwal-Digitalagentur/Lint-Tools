@@ -46,7 +46,7 @@ stages: [build, test, release]
 #      stage: build
 
 include:
-  - component: ${CI_SERVER_HOST}/devops/ci-cd-components/release-tools/semantic-release@1.0.1
+  - component: ${CI_SERVER_HOST}/devops/ci-cd-components/release-tools/semantic-release@1.0.3
     inputs:
       stage: release
 
