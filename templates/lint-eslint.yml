@@ -9,6 +9,7 @@ lint:eslint:
   needs:
     - job: build:extension:frontend
       optional: true
+    - job: build:prepare
   rules:
     - if: $CI_COMMIT_TAG
       when: never
