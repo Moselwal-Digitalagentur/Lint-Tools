@@ -18,6 +18,7 @@ lint:xliff:
   tags:
     - docker
   before_script:
+    - apk add --no-cache libxml2-utils
     - echo "Downloading XLIFF Schema"
     - wget --no-check-certificate https://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd && mv xliff-core-1.2-strict.xsd /
   script:
