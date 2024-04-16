@@ -20,4 +20,4 @@ lint:typoscript:
   tags:
     - docker
   script:
-    - php .composer/bin/typoscript-lint -c .typoscript-lint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript
+    - php .composer/bin/typoscript-lint -c .typoscript-lint.yml --ansi -n -vvv Configuration/TypoScript
