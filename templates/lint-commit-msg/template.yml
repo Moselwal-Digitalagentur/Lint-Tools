@@ -1,0 +1,97 @@
+#  Moselwal Digitalagentur Release Tools
+#    Copyright (C) 2024  Moselwal Digitalagentur GmbH, Kai Ole Hartwig <support@moselwal.de>
+#
+#  This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+spec:
+  inputs:
+    stage:
+      default: 'test'
+      description: "The stage in the CI/CD pipeline where this job will run.  "
+    rules-config:
+      description: "Configuration rules that determine when the job should run."
+      type: array
+      default:
+        - if: $CI_COMMIT_TAG
+          when: never
+        - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    needs-config:
+      description: "Configure the jobs that needed to run this job."
+      type: array
+      default:
+        - job: build:extension:backend
+          optional: true
+        - job: build:site:test:backend
+          optional: true
+        - job: build:prepare
+          optional: true
+    image-config:
+      description: "The Docker image to use for the job. This should use semantic versioning."
+      default: "registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest"
+    tags-config:
+      description: "Tags used to select specific runners to execute the job."
+      type: array
+      default:
+        - docker
+    additional-script-begin:
+      description: "Add additional Script at the beginning of the Script."
+      default: ''
+    additional-script-end:
+      description: "Add additional Script at the end of the Script."
+      default: ''
+---
+lint:commit-msg:
+  stage: $[[ inputs.stage ]]
+  needs: $[[ inputs.needs-config ]]
+  image: $[[ inputs.image-config | expand_vars ]]
+  rules: $[[ inputs.rules-config ]]
+  tags: $[[ inputs.tags-config ]]
+  script:
+    - $[[ inputs.additional-script-begin ]]
+    - git fetch origin ${CI_DEFAULT_BRANCH}:${CI_DEFAULT_BRANCH}
+    - |
+      #!/bin/bash
+      if [ -d "./.composer" ]; then
+        echo "Packages installed into directory .composer"
+        ./.composer/bin/captainhook install --no-interaction --force -b .composer/vendor/autoload.php commit-msg 
+      elif [ -d "./vendor" ]; then
+        echo "Packages installed into directory vendor"
+        ./vendor/bin/captainhook install --no-interaction --force commit-msg
+      else
+        echo "No packages installed"
+        composer install --no-interaction -o -a -vvv
+      
+        if [ -d "./.composer" ]; then
+          echo "Packages installed into directory .composer"
+          ./.composer/bin/captainhook install --no-interaction --force -b .composer/vendor/autoload.php commit-msg 
+        elif [ -d "./vendor" ]; then
+          echo "Packages installed into directory vendor"
+          ./vendor/bin/captainhook install --no-interaction --force commit-msg
+        else
+          echo "Packages not installed or installed to unknown location."
+          exit1
+        fi
+      fi
+    - |
+      #!/bin/bash
+      set -eu
+      echo ""
+      echo "Now linting your commit message(s)"
+
+      for commit in $(git rev-list "${CI_DEFAULT_BRANCH}..HEAD"); do
+        git log --format=%B -n 1 "${commit}" > GIT_COMMIT_MESSAGE
+        echo "Linting message of commit '${commit}' with message '$(cat GIT_COMMIT_MESSAGE)'"
+        .git/hooks/commit-msg GIT_COMMIT_MESSAGE
+      done;
+    - $[[ inputs.additional-script-end ]]

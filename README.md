@@ -1,93 +1,502 @@
-# Lint Tools
+# Moselwal Digitalagentur Lint Tools
 
+<details>
+<summary>Table of Content</summary>
 
+[TOC]
 
-## Getting started
+</details>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Overview
+Welcome to the Moselwal Digitalagentur Lint Tools repository. This project provides a set of GitLab CI/CD components designed to streamline and automate the linting process for various projects. The lint tools are designed to be flexible, with configurable inputs to tailor the CI/CD pipeline to your specific needs.
 
 ## License
-For open source projects, say how it is licensed.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+## Components
+
+### Component: lint:commit-msg
+This job is responsible for linting commit messages to ensure they meet the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start linting"`              | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End linting"`                | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == 'merge_request_event'
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:site:test:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:composer:normalize
+This job is responsible for normalizing the `composer.json` file to ensure it adheres to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start linting"`              | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End linting"`                | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - composer.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - composer.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+
+### Component: lint:composer:psr-verify
+This job is responsible for verifying that the `composer.json` file adheres to PSR standards by running `composer dumpautoload` with the `--strict-psr` flag.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start PSR verification"`     | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End PSR verification"`       | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - composer.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - composer.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+
+### Component: lint:composer:validate
+This job is responsible for validating the `composer.json` file to ensure it is correct and adheres to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start validation"`           | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End validation"`             | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - composer.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - composer.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:eslint
+This job is responsible for running ESLint to ensure that the JavaScript code adheres to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                           | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                                | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules           | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs           | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/node:14-alpine` | `$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/$NODE_VERSION-alpine`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                      | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start ESLint"`                 | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End ESLint"`                   | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/package.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/package.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:frontend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:json
+This job is responsible for linting JSON files to ensure they adhere to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start JSON linting"`         | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End JSON linting"`           | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/*.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/*.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:phplint
+This job is responsible for linting PHP files to ensure they adhere to the project's coding standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start PHP linting"`          | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End PHP linting"`            | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == 'merge_request_event'
+  exists:
+    - ./**/*.php
+```
+
+
+##### Default `needs-config`
+```yaml
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:stylelint
+This job is responsible for running Stylelint to ensure that the CSS/SCSS code adheres to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                           | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                                | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules           | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs           | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/node:14-alpine` | `$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/$NODE_VERSION-alpine`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                      | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start Stylelint"`              | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End Stylelint"`                | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/package.json
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/package.json
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:frontend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+#### Artifacts Settings
+
+```yaml
+artifacts:
+expire_in: 60 minutes
+reports:
+junit: ${CI_PROJECT_DIR}/${NPM_BUILD_DIR}/reports/stylelintreport.junit.xml
+```
+
+### Component: lint:typoscript
+This job is responsible for linting TypoScript and TSconfig files to ensure they adhere to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start TypoScript linting"`   | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End TypoScript linting"`     | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/*.typoscript
+    - ./**/*.tsconfig
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/*.typoscript
+    - ./**/*.tsconfig
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:frontend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:xlf
+This job is responsible for linting XLF (XML Localization Interchange File Format) files to ensure they adhere to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start XLF linting"`          | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End XLF linting"`            | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/*.xlf
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/*.xlf
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+### Component: lint:yaml
+This job is responsible for linting YAML files to ensure they adhere to the project's standards.
+
+#### Inputs
+
+| **Input**                   | **Description**                                                                                     | **Example**                         | **Default Value**                                                      |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------|------------------------------------------------------------------------|
+| `stage`                     | (Optional) The stage in the CI/CD pipeline where this job will run.                                 | `test`                              | `test`                                                                 |
+| `rules-config`              | (Optional) Configuration rules that determine when the job should run.                             | See below for default rules         | See below for default rules                                            |
+| `needs-config`              | (Optional) Configure the jobs that need to run before this job.                                    | See below for default needs         | See below for default needs                                            |
+| `image-config`              | (Optional) The Docker image to use for the job. This should use semantic versioning.               | `registry.example.com/php/7.4/ci:latest` | `registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest`         |
+| `tags-config`               | (Optional) Tags used to select specific runners to execute the job.                                | `docker`, `test`                    | `docker`                                                               |
+| `additional-script-begin`   | (Optional) Add additional script at the beginning of the script.                                   | `echo "Start YAML linting"`         | `''`                                                                   |
+| `additional-script-end`     | (Optional) Add additional script at the end of the script.                                         | `echo "End YAML linting"`           | `''`                                                                   |
+
+##### Default `rules-config`
+```yaml
+- if: $CI_COMMIT_TAG
+  when: never
+- if: $CI_COMMIT_REF_NAME == 'release'
+  when: never
+- if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  exists:
+    - ./**/*.yaml
+    - ./**/*.yml
+- if: $CI_COMMIT_REF_NAME != 'release'
+  exists:
+    - ./**/*.yaml
+    - ./**/*.yml
+```
+
+##### Default `needs-config`
+```yaml
+- job: build:extension:backend
+  optional: true
+- job: build:prepare
+  optional: true
+```
+
+- **Stage**: $[[ inputs.stage ]]
+- **Rules**: $[[ inputs.rules-config ]]
+- **Needs**: $[[ inputs.needs-config ]]
+- **Image**: $[[ inputs.image-config | expand_vars ]]
+- **Tags**: $[[ inputs.tags-config ]]
+
+## Contributing
+Please read about CI/CD components and best practices at: https://docs.gitlab.com/ee/ci/components    
+We welcome contributions to improve the Moselwal Digitalagentur Release Tools. Please read our [Contributions Documentation](CONTRIBUTING.md)
+
+## Support
+For support, please contact [Moselwal Digitalagentur GmbH](mailto:support@moselwal.de).
