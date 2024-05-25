@@ -27,20 +27,15 @@ spec:
           when: never
         - if: ($CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == 'merge_request_event'
           exists:
-            - ./**/*.yaml
-            - ./**/*.yml
+            - ./**/*.php
         - when: never
     needs-config:
       description: "Configure the jobs that needed to run this job."
       type: array
-      default:
-        - job: build:extension:backend
-          optional: true
-        - job: build:prepare
-          optional: true
+      default: []
     image-config:
       description: "The Docker image to use for the job. This should use semantic versioning."
-      default: "registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest"
+      default: "fsfe/reuse:latest"
     tags-config:
       description: "Tags used to select specific runners to execute the job."
       type: array
@@ -52,21 +47,17 @@ spec:
     additional-script-end:
       description: "Add additional Script at the end of the Script."
       default: ''
-lint:yaml:
+---
+lint:reuse:
   stage: $[[ inputs.stage ]]
-  image: registry.moselwal.io/devops/images/php/$PHP_VERSION/ci:latest
-  needs:
-    - job: build:extension:backend
-    - job: build:prepare
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-    - if: $CI_COMMIT_REF_NAME != 'release'
-    - if: $CI_COMMIT_REF_NAME == 'release'
-      when: never
-  allow_failure: false
-  tags:
-    - docker
+  image:
+    name: $[[ inputs.image-config | expand_vars ]]
+    entrypoint: [""]
+  needs: $[[ inputs.needs-config ]]
+  rules: $[[ inputs.rules-config ]]
+  allow_failure: true
+  tags: $[[ inputs.tags-config ]]
   script:
-    - rm -rf Build/node_modules && find . -not -path './.composer/*' -not -path './Build/*' \( -name '*.yaml' -o -name '*.yml' \) | xargs -r php .composer/bin/yaml-lint
+    - $[[ inputs.additional-script-begin ]]
+    - reuse lint
+    - $[[ inputs.additional-script-end ]]

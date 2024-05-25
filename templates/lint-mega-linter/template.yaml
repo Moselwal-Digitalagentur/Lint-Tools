@@ -1,0 +1,118 @@
+#  Moselwal Digitalagentur Release Tools
+#    Copyright (C) 2024  Moselwal Digitalagentur GmbH, Kai Ole Hartwig <support@moselwal.de>
+#
+#  This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+spec:
+  inputs:
+    stage:
+      default: 'test'
+      description: "The stage in the CI/CD pipeline where this job will run.  "
+    rules-config:
+      description: "Configuration rules that determine when the job should run."
+      type: array
+      default:
+        - if: $CI_COMMIT_TAG
+          when: never
+        - if: ($CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == 'merge_request_event'
+          exists:
+            - .mega-linter.yml
+        - when: never
+    needs-config:
+      description: "Configure the jobs that needed to run this job."
+      type: array
+      default: []
+    image-config:
+      description: "The Docker image to use for the job. You can override MegaLinter flavor used to have faster performances. More info at https://github.com/oxsecurity/megalinter#flavors"
+      default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter:v7.11.1"
+    tags-config:
+      description: "Tags used to select specific runners to execute the job."
+      type: array
+      default:
+        - docker
+    additional-script-begin:
+      description: "Add additional Script at the beginning of the Script."
+      default: 'echo "this job is not properly tested"'
+    additional-script-end:
+      description: "Add additional Script at the end of the Script."
+      default: ''
+
+    default_branch:
+      description: "Deprecated: The name of the repository's default branch."
+      default: "${CI_DEFAULT_BRANCH}"
+    default_workspace:
+      description: "The location containing files to lint if you are running locally."
+      default: "${CI_PROJECT_DIR}"
+    linter_rules_path:
+      description: "Directory for all linter configuration rules. Can be a local folder or a remote URL (ex: https://raw.githubusercontent.com/some_org/some_repo/mega-linter-rules )"
+      default: ".linters"
+    report_output_folder:
+      description: "Directory for generating report files. Set to none to not generate reports"
+      default: "megalinter-reports"
+    gitlab_comment_reporter:
+      description: "Posts Mega-Linter results summary in the comments of the related merge request (if existing). https://oxsecurity.github.io/megalinter/latest/reporters/GitlabCommentReporter/"
+      default: "true"
+    sarif_reporter:
+      description: "Activate the SARIF reporter"
+      default: "true"
+    converted_output_folder:
+      description: "End folder where reports are held"
+      default: "converted.report"
+    sarif_codeclimate_version:
+      description: "Version tag of the sarif-codeclimate package to convert sarif reports. https://www.npmjs.com/package/sarif-codeclimate"
+      default: "2.1.2"
+---
+lint:mega-linter:
+  stage: $[[ inputs.stage ]]
+  image: $[[ inputs.image-config | expand_vars ]]
+  needs: $[[ inputs.needs-config ]]
+  rules: $[[ inputs.rules-config ]]
+  allow_failure: true
+  tags: $[[ inputs.tags-config ]]
+  variables:
+    ### MegaLinter variables
+    DEFAULT_WORKSPACE: $[[ inputs.default_workspace ]]
+    DEFAULT_BRANCH: $[[ inputs.default_branch ]]
+    LINTER_RULES_PATH: $[[ inputs.linter_rules_path ]]
+    REPORT_OUTPUT_FOLDER: $[[ inputs.report_output_folder ]]
+    GITLAB_COMMENT_REPORTER: $[[ inputs.gitlab_comment_reporter ]]
+    SARIF_REPORTER: $[[ inputs.sarif_reporter ]]
+
+  script:
+    - $[[ inputs.additional-script-begin ]]
+    - FAILED=false
+    - |
+      if /entrypoint.sh true; then
+        echo -e "\e[32mMegaLinter haven't found any issue!"
+      else
+        echo -e "\e[31mMegaLinter found some issues. Check this job log and the artifact reports."
+        FAILED=true
+      fi
+
+    - mkdir ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
+    - cp ${CI_PROJECT_DIR}/$[[ inputs.report_output_folder ]]/megalinter-report.sarif ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
+    - cd ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
+    - npx -y sarif-codeclimate@$[[ inputs.sarif_codeclimate_version ]] -i megalinter-report.sarif -o code-climate.json
+    - if [ "$FAILED" = true ]; then
+    -   exit 1
+    - fi
+    - $[[ inputs.additional-script-end ]]
+  artifacts:
+    when: always
+    paths:
+      - ${CI_PROJECT_DIR}/$[[ inputs.report_output_folder ]]
+      - ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
+    expire_in: 1 week
+    reports:
+      codequality: "${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]/code-climate.json"
