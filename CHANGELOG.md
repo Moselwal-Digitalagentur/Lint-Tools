@@ -1,3 +1,9 @@
+## [1.2.7](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.6...1.2.7) (2024-06-02)
+
+### :bug: Fixes
+
+* megalinter can only run on amd64 ([11e4f9f](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/11e4f9f08845a3cc8a405d8a33a084e2ab9a93d4)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.6](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.5...1.2.6) (2024-06-02)
 
 ### :repeat: Chores
