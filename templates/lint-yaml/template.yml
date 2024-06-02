@@ -52,6 +52,7 @@ spec:
     additional-script-end:
       description: "Add additional Script at the end of the Script."
       default: ''
+---
 lint:yaml:
   stage: $[[ inputs.stage ]]
   image: $[[ inputs.image-config | expand_vars ]]
