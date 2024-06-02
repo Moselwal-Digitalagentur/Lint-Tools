@@ -1,3 +1,9 @@
+## [1.2.8](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.7...1.2.8) (2024-06-02)
+
+### :bug: Fixes
+
+* use megalinter flavor cupcake, change converted_output_folder ([ea0ca62](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/ea0ca62d57e6d0a42992e03ae5162bd03fd77ab2)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.7](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.6...1.2.7) (2024-06-02)
 
 ### :bug: Fixes
