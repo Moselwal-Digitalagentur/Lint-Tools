@@ -33,12 +33,12 @@ spec:
       default: []
     image-config:
       description: "The Docker image to use for the job. You can override MegaLinter flavor used to have faster performances. More info at https://github.com/oxsecurity/megalinter#flavors"
-      default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter:v7.11.1"
+      default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter:v7"
     tags-config:
       description: "Tags used to select specific runners to execute the job."
       type: array
       default:
-        - docker
+        - amd64
     additional-script-begin:
       description: "Add additional Script at the beginning of the Script."
       default: 'echo "this job is not properly tested"'
