@@ -33,7 +33,7 @@ spec:
       default: []
     image-config:
       description: "The Docker image to use for the job. You can override MegaLinter flavor used to have faster performances. More info at https://github.com/oxsecurity/megalinter#flavors"
-      default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter:v7"
+      default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter-cupcake:v7"
     tags-config:
       description: "Tags used to select specific runners to execute the job."
       type: array
@@ -66,7 +66,7 @@ spec:
       default: "true"
     converted_output_folder:
       description: "End folder where reports are held"
-      default: "converted.report"
+      default: "converted-report"
     sarif_codeclimate_version:
       description: "Version tag of the sarif-codeclimate package to convert sarif reports. https://www.npmjs.com/package/sarif-codeclimate"
       default: "2.1.2"
