@@ -30,7 +30,9 @@ spec:
     needs-config:
       description: "Configure the jobs that needed to run this job."
       type: array
-      default: []
+      default:
+        - job: build:extension:backend
+          optional: true
     image-config:
       description: "The Docker image to use for the job. You can override MegaLinter flavor used to have faster performances. More info at https://github.com/oxsecurity/megalinter#flavors"
       default: "${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/oxsecurity/megalinter-cupcake:v7"
@@ -90,6 +92,8 @@ lint:mega-linter:
   script:
     - $[[ inputs.additional-script-begin ]]
     - FAILED=false
+    - mkdir -p ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
+    - mkdir -p ${CI_PROJECT_DIR}/$[[ inputs.report_output_folder ]]/sarif
     - |
       if /entrypoint.sh true; then
         echo -e "\e[32mMegaLinter haven't found any issue!"
@@ -98,7 +102,6 @@ lint:mega-linter:
         FAILED=true
       fi
 
-    - mkdir ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
     - cp ${CI_PROJECT_DIR}/$[[ inputs.report_output_folder ]]/megalinter-report.sarif ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
     - cd ${CI_PROJECT_DIR}/$[[ inputs.converted_output_folder ]]
     - npx -y sarif-codeclimate@$[[ inputs.sarif_codeclimate_version ]] -i megalinter-report.sarif -o code-climate.json
