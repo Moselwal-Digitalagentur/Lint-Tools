@@ -1,3 +1,9 @@
+## [1.2.6](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.5...1.2.6) (2024-06-02)
+
+### :repeat: Chores
+
+* enable megalinter per default ([2ad1a37](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/2ad1a37b2b50f5a1f59f754c1d0b13dd6f91b13a)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.5](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.4...1.2.5) (2024-06-02)
 
 ### :bug: Fixes
