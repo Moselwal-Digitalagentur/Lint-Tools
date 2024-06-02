@@ -80,16 +80,15 @@ lint:mega-linter:
   rules: $[[ inputs.rules-config ]]
   allow_failure: true
   tags: $[[ inputs.tags-config ]]
-  variables:
-    ### MegaLinter variables
-    DEFAULT_WORKSPACE: $[[ inputs.default_workspace | expand_vars ]]
-    DEFAULT_BRANCH: $[[ inputs.default_branch | expand_vars ]]
-    LINTER_RULES_PATH: $[[ inputs.linter_rules_path | expand_vars ]]
-    REPORT_OUTPUT_FOLDER: $[[ inputs.report_output_folder | expand_vars ]]
-    GITLAB_COMMENT_REPORTER: $[[ inputs.gitlab_comment_reporter | expand_vars ]]
-    SARIF_REPORTER: $[[ inputs.sarif_reporter | expand_vars ]]
   script:
     - $[[ inputs.additional-script-begin ]]
+    ## MeaLinter variables
+    - export DEFAULT_WORKSPACE=$[[ inputs.default_workspace | expand_vars ]]
+    - export DEFAULT_BRANCH=$[[ inputs.default_branch | expand_vars ]]
+    - export LINTER_RULES_PATH=$[[ inputs.linter_rules_path | expand_vars ]]
+    - export REPORT_OUTPUT_FOLDER=$[[ inputs.report_output_folder | expand_vars ]]
+    - export GITLAB_COMMENT_REPORTER=$[[ inputs.gitlab_comment_reporter | expand_vars ]]
+    - export SARIF_REPORTER=$[[ inputs.sarif_reporter | expand_vars ]]
     - FAILED=false
     - |
       if /entrypoint.sh true; then
