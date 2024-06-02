@@ -1,3 +1,9 @@
+## [1.2.9](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.8...1.2.9) (2024-06-02)
+
+### :bug: Fixes
+
+* megalinter config ([9483cd8](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/9483cd814022b92a92d4fdecf5623ecdb08554a2)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.8](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.7...1.2.8) (2024-06-02)
 
 ### :bug: Fixes
