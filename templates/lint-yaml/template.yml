@@ -63,4 +63,4 @@ lint:yaml:
   script:
     - $[[ inputs.additional-script-begin ]]
     - rm -rf Build/node_modules && find . -not -path './.composer/*' -not -path './Build/*' \( -name '*.yaml' -o -name '*.yml' \) | xargs -r php .composer/bin/yaml-lint
-    - $[[ inputs,additional-script-end ]]
+    - $[[ inputs.additional-script-end ]]
