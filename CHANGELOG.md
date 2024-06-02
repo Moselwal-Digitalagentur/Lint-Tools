@@ -1,3 +1,9 @@
+## [1.2.5](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.4...1.2.5) (2024-06-02)
+
+### :bug: Fixes
+
+* update mega linter rules ([d7d65d5](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/d7d65d51eeff8e66fb3b51188044b63aa4d224c6)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.4](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.3...1.2.4) (2024-06-02)
 
 ### :bug: Fixes
