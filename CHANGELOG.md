@@ -1,3 +1,10 @@
+## [1.2.2](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.1...1.2.2) (2024-06-02)
+
+### :bug: Fixes
+
+* megalinter job ([3c6437a](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/3c6437a4483f09520f9795f6994b1d3406df0e21)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+* megalinter job ([d8d9402](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/d8d94026032828c23501c23de4be39659777c98e)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.1](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.0...1.2.1) (2024-06-02)
 
 ### :bug: Fixes
