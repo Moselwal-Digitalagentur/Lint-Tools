@@ -82,13 +82,12 @@ lint:mega-linter:
   tags: $[[ inputs.tags-config ]]
   variables:
     ### MegaLinter variables
-    DEFAULT_WORKSPACE: $[[ inputs.default_workspace ]]
-    DEFAULT_BRANCH: $[[ inputs.default_branch ]]
-    LINTER_RULES_PATH: $[[ inputs.linter_rules_path ]]
-    REPORT_OUTPUT_FOLDER: $[[ inputs.report_output_folder ]]
-    GITLAB_COMMENT_REPORTER: $[[ inputs.gitlab_comment_reporter ]]
-    SARIF_REPORTER: $[[ inputs.sarif_reporter ]]
-
+    DEFAULT_WORKSPACE: $[[ inputs.default_workspace | expand_vars ]]
+    DEFAULT_BRANCH: $[[ inputs.default_branch | expand_vars ]]
+    LINTER_RULES_PATH: $[[ inputs.linter_rules_path | expand_vars ]]
+    REPORT_OUTPUT_FOLDER: $[[ inputs.report_output_folder | expand_vars ]]
+    GITLAB_COMMENT_REPORTER: $[[ inputs.gitlab_comment_reporter | expand_vars ]]
+    SARIF_REPORTER: $[[ inputs.sarif_reporter | expand_vars ]]
   script:
     - $[[ inputs.additional-script-begin ]]
     - FAILED=false
