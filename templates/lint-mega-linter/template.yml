@@ -28,6 +28,7 @@ spec:
         - if: ($CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS == null) || $CI_PIPELINE_SOURCE == 'merge_request_event'
           exists:
             - .mega-linter.yml
+            - ./**/.mega-linter.yml
         - when: never
     needs-config:
       description: "Configure the jobs that needed to run this job."
