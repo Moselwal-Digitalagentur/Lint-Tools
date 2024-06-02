@@ -1,3 +1,9 @@
+## [1.2.3](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.2...1.2.3) (2024-06-02)
+
+### :bug: Fixes
+
+* yaml lint job ([5d305dc](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/5d305dc3a799964969df2b93ab30bc11ef01dfa8)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.2](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.1...1.2.2) (2024-06-02)
 
 ### :bug: Fixes
