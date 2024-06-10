@@ -1,3 +1,9 @@
+## [1.2.10](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.9...1.2.10) (2024-06-10)
+
+### :bug: Fixes
+
+* set rules identical to test-tools ([07156f6](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/commit/07156f66d369d87a938f1ebe4c597c4fd317a5f7)), closes [no-issue#0](https://gitlab.moselwal.io/devops/no-issue/issues/0)
+
 ## [1.2.9](https://gitlab.moselwal.io/devops/ci-cd-components/lint-tools/compare/1.2.8...1.2.9) (2024-06-02)
 
 ### :bug: Fixes
